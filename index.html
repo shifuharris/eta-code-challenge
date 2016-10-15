@@ -36,7 +36,7 @@
                 </div>
 
                 <accordion close-others="true">
-                    <accordion-group is-open="!isopen" ng-repeat="title in titles | filter: selTitle">
+                    <accordion-group is-open="isopen" ng-repeat="title in titles | filter: selTitle">
                         <accordion-heading>
                             {{title.TitleName}} ({{title.ReleaseYear}})
                             <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
