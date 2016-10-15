@@ -1,6 +1,6 @@
 // server.go
 //
-// REST APIs with Go and MySql.
+// REST APIs with Go and SQL Server 2016.
 //
 // Usage:
 //
@@ -14,7 +14,6 @@ import (
 	"log"
 	"net/http"
 	"database/sql"
-	"flag"
 	"encoding/json"
 
 	_ "github.com/denisenkom/go-mssqldb"
@@ -52,11 +51,12 @@ type Title  struct {
 }
 
 var (
-	password = flag.String("P", "sqlpass1234!", "the database password")
-	server = flag.String("S", "localhost", "the database server")
-	userid = flag.String("U", "etauser", "the database user")
-	database= flag.String("D", "Titles", "the database name")
+	dbPass = "sqlpass1234!"
+	dbServer = "localhost"
+	dbUser = "etauser"
+	dbDatabase= "Titles"
 )
+
 
 // Respond to URLs of the form / and send static content
 func Handler(response http.ResponseWriter, request *http.Request){
@@ -68,11 +68,8 @@ func APIHandler(response http.ResponseWriter, request *http.Request){
 	//set mime type to JSON
     response.Header().Set("Content-type", "application/json")
 
-    // Parse flag settings for SQL server
-    flag.Parse()
-
     //Connect to database
-	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;database=%s", *server, *userid, *password, *database)
+	connString := fmt.Sprintf("server=" + dbServer + ";user id=" + dbUser + ";password=" + dbPass + ";database=" + dbDatabase)
     db, err := sql.Open("mssql", connString)
     if err != nil {
         log.Fatal("Open connection failed:", err.Error())
